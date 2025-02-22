@@ -1,6 +1,6 @@
 # FPV Auto Trimmer
 - Detects frames when the drone is sitting on the ground at the start of of FPV drone video clips, and **trims the frames out.**
-- Processes **multiple videos** automatically.
+- Processes **multiple videos** automatically (sequentially).
 - Uses **Optical Flow** to track motion.
 - Detects **takeoff events** based on motion intensity.
 
