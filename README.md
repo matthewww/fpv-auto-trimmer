@@ -5,6 +5,7 @@
 - Detects **takeoff events** based on motion intensity.
 
 ![image](https://github.com/user-attachments/assets/92479965-0f6f-4f43-ae98-29b20ec7581a)
+![image](https://github.com/user-attachments/assets/8aa4c082-385c-4aac-8fd0-114df681cb33)
 
 ![image](https://github.com/user-attachments/assets/e8b74f78-ecc8-45e4-a8a9-3a412144e491)
 
