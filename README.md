@@ -16,7 +16,7 @@ I had a lot of videos taking up unnecessary space, but also didn't want to delet
 So far, only tested to be working on .MOV format H.264 codec videos (from a Runcam 3).
 
 ## Performance
-Approx realtime - takes around 60s for a 60s clip.
+Around 60s for a 60s clip (i7 6700k, 16 GB)
 
 ## **Running the Script**
 ``pip install opencv-python``
