@@ -2,7 +2,7 @@
 [![Pylint](https://github.com/matthewww/fpv-auto-trimmer/actions/workflows/pylint.yml/badge.svg)](https://github.com/matthewww/fpv-auto-trimmer/actions/workflows/pylint.yml)
 - Detects frames when the drone is sitting on the ground at the start of of FPV drone video clips, and **trims the frames out.**
 - Processes **multiple videos** automatically (sequentially).
-- Uses **Optical Flow** to track motion.
+- Uses **[Optical Flow](https://docs.opencv.org/4.x/d4/dee/tutorial_optical_flow.html)** to track motion.
 - Detects **takeoff events** based on motion intensity.
 
 ![image](https://github.com/user-attachments/assets/92479965-0f6f-4f43-ae98-29b20ec7581a)
