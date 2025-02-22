@@ -1,27 +1,32 @@
-import cv2
-import numpy as np
 import os
 import time
+import cv2
+import numpy as np
 
+# Scale down the video by this factor
 SCALE_FACTOR = 0.3
+# Skip the first 4 seconds of the video
+SKIP_SECONDS = 4
+# Frames to process per second
+FRAMES_PER_SECOND = 30
 
 def detect_motion(video_path, motion_threshold=8.0):
     start_time = time.time()
-    
+
     cap = cv2.VideoCapture(video_path)
     fps, total_frames = get_video_metadata(cap)
-    
+
     print_initial_status(video_path, fps, total_frames)
     
     if not skip_initial_setup_frames(cap, fps):
         return None, None
-    
+
     prev_gray = get_initial_frame(cap)
     if prev_gray is None:
         return None, None
-    
+
     takeoff_frame = process_frames_for_takeoff(cap, prev_gray, total_frames, start_time, motion_threshold)
-    
+
     print(f"\nAnalysis complete in {time.time() - start_time:.1f} seconds.")
     cap.release()
     return takeoff_frame, None
@@ -32,14 +37,14 @@ def get_video_metadata(cap):
     return fps, total_frames
 
 def print_initial_status(video_path, fps, total_frames):
-    estimated_fps_processing = 30
+    estimated_fps_processing = FRAMES_PER_SECOND
     estimated_total_time = total_frames / estimated_fps_processing
     print(f"Processing {os.path.basename(video_path)}...")
-    print(f"Skipping first 4 seconds ({fps * 4} frames)...")
+    print(f"Skipping first {SKIP_SECONDS} seconds ({fps * SKIP_SECONDS} frames)...")
     print(f"Estimated processing time: {estimated_total_time:.1f} seconds")
 
 def skip_initial_setup_frames(cap, fps):
-    initial_skip_frames = 4 * fps
+    initial_skip_frames = SKIP_SECONDS * fps
     for _ in range(initial_skip_frames):
         ret = cap.read()[0]
         if not ret:
@@ -75,6 +80,7 @@ def print_progress(frame_num, total_frames, start_time):
     elapsed_time = time.time() - start_time
     progress = (frame_num / total_frames) * 100
     remaining_time = (elapsed_time / frame_num) * (total_frames - frame_num)
+
     print(f"\rAnalyzing frame {frame_num}/{total_frames} ({progress:.1f}%) - "
           f"Elapsed: {elapsed_time:.1f}s, Remaining: {remaining_time:.1f}s", 
           end="", flush=True)
@@ -83,28 +89,28 @@ def process_frames_for_takeoff(cap, prev_gray, total_frames, start_time, motion_
     motion_history = []
     history_size = 5
     takeoff_frame = None
-    
+
     for frame_num in range(1, total_frames):
-        if frame_num % 30 == 0:
+        if frame_num % FRAMES_PER_SECOND == 0:
             print_progress(frame_num, total_frames, start_time)
-        
+
         ret, frame = cap.read()
         if not ret:
             break
-        
+
         motion_magnitude, gray = calculate_motion(prev_gray, frame)
         
         motion_history.append(motion_magnitude)
         if len(motion_history) > history_size:
             motion_history.pop(0)
-        
+
         avg_motion = np.mean(motion_history)
         
         if takeoff_frame is None and avg_motion > motion_threshold:
             takeoff_frame = max(0, frame_num - history_size)
-        
+
         prev_gray = gray
-    
+
     return takeoff_frame
 
 def trim_video(video_path, output_path, start_frame, end_frame):
@@ -129,13 +135,13 @@ def trim_video(video_path, output_path, start_frame, end_frame):
 def process_videos(folder_path, output_folder):
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
-    
+
     for filename in os.listdir(folder_path):
         if filename.endswith((".mp4", ".mov", ".MOV")):
             video_path = os.path.join(folder_path, filename)
             output_path = os.path.join(output_folder, "trimmed_" + filename)
             takeoff, landing = detect_motion(video_path)
-            
+
             if takeoff is not None:
                 trim_video(video_path, output_path, takeoff, landing if landing else None)
                 print(f"Processed: {filename} -> Trimmed from frame {takeoff} to {landing if landing else 'end'}.")
