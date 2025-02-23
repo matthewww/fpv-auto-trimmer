@@ -9,6 +9,8 @@ SCALE_FACTOR = 0.3
 SKIP_SECONDS = 4
 # Frames to process per second
 FRAMES_PER_SECOND = 30
+# Number of iterations for the optical flow calculation
+ITERATIONS = 3
 
 def detect_motion(video_path, motion_threshold=8.0):
     start_time = time.time()
@@ -70,7 +72,7 @@ def calculate_motion(prev_gray, current_frame):
                                         pyr_scale=0.5,
                                         levels=3,
                                         winsize=15,
-                                        iterations=3,
+                                        iterations=ITERATIONS,
                                         poly_n=5,
                                         poly_sigma=1.1,
                                         flags=0)
