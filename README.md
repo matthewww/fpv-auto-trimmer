@@ -11,15 +11,6 @@
 
 ![image](https://github.com/user-attachments/assets/e8b74f78-ecc8-45e4-a8a9-3a412144e491)
 
-## Why?
-I had a lot of videos taking up unnecessary space, but also didn't want to delete them. I wanted to build a tool that quickly and easily keep only the main flights.
-
-## Compatibility
-So far, only tested to be working on .MOV format H.264 codec videos (from a Runcam 3).
-
-## Performance
-Around 60s for a 60s clip (i7 6700k, 16 GB)
-
 ## **Running the Script**
 ``pip install opencv-python``
 Add your MOV videos to \input
@@ -28,3 +19,15 @@ Run the script
 - Scans all videos in `'input'` folder.
 - Detects motion and trims videos.
 - Saves results in `'output'` folder.
+  
+## Why?
+I had a lot of videos taking up unnecessary space, but also didn't want to delete them. I wanted to build a tool that quickly and easily keep only the main flights.
+
+Also I just wanted an excuse to try out a Python / Github CI/CD workflow 😛
+
+## Compatibility
+So far, only tested to be working on .MOV format H.264 codec videos (from a Runcam 3).
+
+## Performance
+Around 60s for a 60s clip (i7 6700k, 16 GB)
+
