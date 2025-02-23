@@ -1,1 +1,3 @@
-pylint\nopencv-python\nnumpy
+pylint
+opencv-python
+numpy
