@@ -1,4 +1,5 @@
 # FPV Auto Trimmer
+[![PyPI version](https://badge.fury.io/py/fpv-auto-trimmer.svg?icon=si%3Apython)](https://badge.fury.io/py/fpv-auto-trimmer)
 [![Pylint](https://github.com/matthewww/fpv-auto-trimmer/actions/workflows/pylint.yml/badge.svg)](https://github.com/matthewww/fpv-auto-trimmer/actions/workflows/pylint.yml)
 [![Publish to PyPI](https://github.com/matthewww/fpv-auto-trimmer/actions/workflows/publish.yml/badge.svg)](https://github.com/matthewww/fpv-auto-trimmer/actions/workflows/publish.yml)
 - Detects frames when the drone is sitting on the ground at the start of of FPV drone video clips, and **trims the frames out.**
