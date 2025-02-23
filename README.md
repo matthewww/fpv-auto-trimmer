@@ -1,5 +1,6 @@
 # FPV Auto Trimmer
 [![Pylint](https://github.com/matthewww/fpv-auto-trimmer/actions/workflows/pylint.yml/badge.svg)](https://github.com/matthewww/fpv-auto-trimmer/actions/workflows/pylint.yml)
+[![Publish to PyPI](https://github.com/matthewww/fpv-auto-trimmer/actions/workflows/publish.yml/badge.svg)](https://github.com/matthewww/fpv-auto-trimmer/actions/workflows/publish.yml)
 - Detects frames when the drone is sitting on the ground at the start of of FPV drone video clips, and **trims the frames out.**
 - Processes **multiple videos** automatically (sequentially).
 - Uses **[Optical Flow](https://docs.opencv.org/4.x/d4/dee/tutorial_optical_flow.html)** to track motion.
