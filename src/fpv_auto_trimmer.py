@@ -1,5 +1,6 @@
 import os
 import time
+
 import cv2
 import numpy as np
 
@@ -153,7 +154,7 @@ def trim_video(video_path, output_path, start_frame, end_frame):
     out.release()
 
 
-def process_videos(folder_path, output_folder):
+def process_videos(folder_path = "input", output_folder = "output"):
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
@@ -171,8 +172,3 @@ def process_videos(folder_path, output_folder):
             )
         else:
             print(f"Takeoff not detected in {video_file}.")
-
-
-FOLDER_PATH = "input"
-OUTPUT_FOLDER = "output"
-process_videos(FOLDER_PATH, OUTPUT_FOLDER)

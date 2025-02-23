@@ -1,12 +1,15 @@
 [project]
 name = "fpv-auto-trimmer"
 version = "0.1.0"
-description = "Automatically trim FPV drone footage based on motion detection"
+description = "Automatically trim FPV drone footage based on motion detection."
 requires-python = ">=3.8"
 dependencies = [
     "opencv-python",
     "numpy",
 ]
+
+[project.scripts]
+fpv-auto-trimmer = "src.fpv_auto_trimmer:process_videos"
 
 [project.optional-dependencies]
 dev = [
@@ -18,9 +21,6 @@ dev = [
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
-
-[tool.setuptools.packages.find]
-where = ["src"]  # list of folders that contain the packages (["."] by default)
 
 [tool.pylint.messages_control]
 disable = [
