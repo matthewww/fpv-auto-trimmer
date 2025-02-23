@@ -1,5 +1,6 @@
 import os
 import time
+import argparse
 
 import cv2
 import numpy as np
@@ -70,11 +71,18 @@ def get_initial_frame(cap):
 
 
 def calculate_motion(prev_gray, current_frame):
-    h, w = prev_gray.shape[:2]
-    small_frame = cv2.resize(current_frame, (w, h))
-    gray = cv2.cvtColor(small_frame, cv2.COLOR_BGR2GRAY)
+    gray = convert_frame_to_grayscale(current_frame, prev_gray.shape)
+    flow = calculate_optical_flow(prev_gray, gray)
+    return calculate_center_motion_magnitude(flow), gray
 
-    flow = cv2.calcOpticalFlowFarneback(
+
+def convert_frame_to_grayscale(frame, target_shape):
+    small_frame = cv2.resize(frame, (target_shape[1], target_shape[0]))
+    return cv2.cvtColor(small_frame, cv2.COLOR_BGR2GRAY)
+
+
+def calculate_optical_flow(prev_gray, gray):
+    return cv2.calcOpticalFlowFarneback(
         prev_gray,
         gray,
         None,
@@ -87,9 +95,11 @@ def calculate_motion(prev_gray, current_frame):
         flags=0,
     )
 
+
+def calculate_center_motion_magnitude(flow):
     h, w = flow.shape[:2]
     center_region = flow[h // 4 : 3 * h // 4, w // 4 : 3 * w // 4]
-    return np.mean(np.abs(center_region)), gray
+    return np.mean(np.abs(center_region))
 
 
 def print_progress(frame_num, total_frames, start_time):
@@ -154,21 +164,72 @@ def trim_video(video_path, output_path, start_frame, end_frame):
     out.release()
 
 
-def process_videos(folder_path = "input", output_folder = "output"):
+def process_videos(input_path=None, output_folder=None):
+    args = parse_command_line_args(input_path, output_folder)
+    input_path, output_folder = args.input_path, args.output
+    
+    files_to_process = get_video_files_to_process(input_path)
+    input_folder = os.path.dirname(input_path) if os.path.isfile(input_path) else input_path
+    
+    output_folder = setup_output_folder(input_folder, output_folder)
+    process_video_files(files_to_process, input_folder, output_folder)
+
+
+def parse_command_line_args(input_path, output_folder):
+    if input_path is not None:
+        return type('Args', (), {'input_path': input_path, 'output': output_folder})
+    
+    parser = argparse.ArgumentParser(
+        description="Trim FPV drone footage based on motion detection."
+    )
+    parser.add_argument(
+        "input_path", help="Path to folder containing input videos or path to single video file"
+    )
+    parser.add_argument("--output", "-o", help="Optional custom output folder path")
+    return parser.parse_args()
+
+
+def get_video_files_to_process(input_path):
+    if os.path.isfile(input_path):
+        return [os.path.basename(input_path)]
+    
+    video_extensions = (".mp4", ".MP4", ".avi", ".mov", ".MOV")
+    return [f for f in os.listdir(input_path) if f.endswith(video_extensions)]
+
+
+def setup_output_folder(input_folder, output_folder):
+    if output_folder is None:
+        output_folder = os.path.join(os.path.dirname(input_folder), "output")
+    
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
+    
+    return output_folder
 
-    video_extensions = (".mp4", ".MP4", ".avi", ".mov")
-    for video_file in [f for f in os.listdir(folder_path) if f.endswith(video_extensions)]:
-        video_path = os.path.join(folder_path, video_file)
+
+def process_video_files(files_to_process, input_folder, output_folder):
+    for video_file in files_to_process:
+        video_path = os.path.join(input_folder, video_file)
         output_path = os.path.join(output_folder, "trimmed_" + video_file)
-        takeoff, landing = detect_motion(video_path)
+        process_single_video(video_file, video_path, output_path)
 
-        if takeoff is not None:
-            trim_video(video_path, output_path, takeoff, landing if landing else None)
-            print(
-                f"Processed: {video_file} -> "
-                f"Trimmed from frame {takeoff} to {landing if landing else 'end'}."
-            )
-        else:
-            print(f"Takeoff not detected in {video_file}.")
+
+def process_single_video(video_file, video_path, output_path):
+    takeoff, landing = detect_motion(video_path)
+    
+    if takeoff is not None:
+        trim_video(video_path, output_path, takeoff, landing if landing else None)
+        print_processing_result(video_file, takeoff, landing)
+    else:
+        print(f"Takeoff not detected in {video_file}.")
+
+
+def print_processing_result(video_file, takeoff, landing):
+    print(
+        f"Processed: {video_file} -> "
+        f"Trimmed from frame {takeoff} to {landing if landing else 'end'}."
+    )
+
+
+if __name__ == "__main__":
+    process_videos()

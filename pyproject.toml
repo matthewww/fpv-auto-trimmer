@@ -9,13 +9,14 @@ dependencies = [
 ]
 
 [project.scripts]
-fpv-auto-trimmer = "src.fpv_auto_trimmer:process_videos"
+fpv-auto-trimmer = "fpv_auto_trimmer:process_videos"
 
 [project.optional-dependencies]
 dev = [
     "pylint",
     "black",
     "isort",
+    "build",
 ]
 
 [build-system]

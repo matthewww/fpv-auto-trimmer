@@ -3,3 +3,6 @@ src/input/*
 # Python package build artifacts
 *.egg-info/
 build/
+dist/fpv_auto_trimmer-0.1.0-py3-none-any.whl
+dist/fpv_auto_trimmer-0.1.0.tar.gz
+src/__pycache__/fpv_auto_trimmer.cpython-310.pyc
