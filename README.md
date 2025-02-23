@@ -11,14 +11,20 @@
 
 ![image](https://github.com/user-attachments/assets/e8b74f78-ecc8-45e4-a8a9-3a412144e491)
 
-## **Running the Script**
-``pip install opencv-python``
-Add your MOV videos to \input
-Run the script
+## Usage
+```bash
+pip install fpv-auto-trimmer
+```
+#### Process all videos in a folder:
+By default, processed videos are saved to an 'output' folder next to the input location.
+```bash
+fpv-auto-trimmer input_path [--output output_path]
+```
 
-- Scans all videos in `'input'` folder.
-- Detects motion and trims videos.
-- Saves results in `'output'` folder.
+#### Process a single video:
+```bash
+fpv-auto-trimmer path/to/video.mov
+```
   
 ## Why?
 I had a lot of videos taking up unnecessary space, but also didn't want to delete them. I wanted to build a tool that quickly and easily keep only the main flights.
@@ -30,4 +36,11 @@ So far, only tested to be working on .MOV format H.264 codec videos (from a Runc
 
 ## Performance
 Around 60s for a 60s clip (i7 6700k, 16 GB)
+
+## Development Setup
+```bash
+git clone https://github.com/matthewww/fpv-auto-trimmer.git
+cd fpv-auto-trimmer
+pip install -e .[dev]
+```
 
