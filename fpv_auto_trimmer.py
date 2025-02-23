@@ -85,7 +85,7 @@ def print_progress(frame_num, total_frames, start_time):
     remaining_time = (elapsed_time / frame_num) * (total_frames - frame_num)
 
     print(f"\rAnalyzing frame {frame_num}/{total_frames} ({progress:.1f}%) - "
-          f"Elapsed: {elapsed_time:.1f}s, Remaining: {remaining_time:.1f}s", 
+          f"Elapsed: {elapsed_time:.1f}s, Remaining: {remaining_time:.1f}s",
           end="", flush=True)
 
 def process_frames_for_takeoff(cap, prev_gray, total_frames, start_time, motion_threshold):
