@@ -1,3 +1,0 @@
-pylint
-opencv-python
-numpy
