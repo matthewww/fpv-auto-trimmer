@@ -7,10 +7,13 @@ import numpy as np
 
 # Scale down the video by this factor
 SCALE_FACTOR = 0.3
+
 # Skip the first seconds of the video
 SKIP_SECONDS = 4
+
 # Frames to process per second
 FRAMES_PER_SECOND = 30
+
 # Number of iterations for the optical flow calculation
 ITERATIONS = 3
 
