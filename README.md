@@ -30,7 +30,7 @@ fpv-auto-trimmer path/to/video.mov
 ## Why?
 I had a lot of videos taking up unnecessary space, but also didn't want to delete them. I wanted to build a tool that quickly and easily keep only the main flights.
 
-Also I just wanted an excuse to try out a Python / Github CI/CD workflow 😛
+Also I just wanted an excuse to try out a Python / Github CI/CD workflow and OpenCV 😛
 
 ## Compatibility
 So far, only tested to be working on .MOV format H.264 codec videos (from a Runcam 3).
