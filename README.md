@@ -19,7 +19,7 @@ pip install fpv-auto-trimmer
 #### Process all videos in a folder:
 By default, processed videos are saved to an 'output' folder next to the input location.
 ```bash
-python -m fpv_auto_trimmer input_path [--output output_path]
+python -m fpv_auto_trimmer [-h] [--output OUTPUT] input_path
 ```
 For example: 
 ```bash
@@ -28,7 +28,7 @@ python -m fpv_auto_trimmer C:\fpv-auto-trimmer\input
 
 #### Process a single video:
 ```bash
-python -m fpv_auto_trimmer input_path_to_video [--output output_path]
+python -m fpv_auto_trimmer [-h] [--output OUTPUT] input_path_to_video
 ```
 For example:
 ```bash
