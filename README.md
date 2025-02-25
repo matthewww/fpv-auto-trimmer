@@ -40,6 +40,12 @@ I had a lot of videos taking up unnecessary space, but also didn't want to delet
 
 Also I just wanted an excuse to try out a Python / Github CI/CD workflow and OpenCV 😛
 
+## Todo
+- [ ] Break into logical modules? Seperate concerns (e.g. 'UI' and OpenCV processing).
+- [ ] Add landing detection.
+- [ ] Parallel process if there's CPU capacity? Process in halves? End to middle? Sort of binary processing.
+- [ ] Accept path at prompt
+
 ## Compatibility
 So far, only tested to be working on .MOV format H.264 codec videos (from a Runcam 3).
 
